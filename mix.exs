@@ -12,7 +12,7 @@ defmodule CrunchBerry.MixProject do
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
       ],
       docs: [
-        main: "README",
+        main: "readme",
         extras: ["README.md"]
       ]
     ]
