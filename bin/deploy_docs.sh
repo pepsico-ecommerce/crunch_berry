@@ -13,6 +13,6 @@ rm .gitignore
 git add -f doc && git commit -m "update docs"
 
 # push the subtree
-git push origin `git subtree split --prefix oc origin gh-pages`:gh-pages --force
+git subtree push --prefix doc origin gh-pages
 
 git reset --hard head
