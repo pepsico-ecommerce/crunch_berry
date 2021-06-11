@@ -10,6 +10,10 @@ defmodule CrunchBerry.MixProject do
       deps: deps(),
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+      ],
+      docs: [
+        main: "README",
+        extras: ["README.md"]
       ]
     ]
   end
@@ -26,7 +30,8 @@ defmodule CrunchBerry.MixProject do
     [
       {:phoenix_live_view, "~> 0.15.7"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false}
     ]
   end
 end
