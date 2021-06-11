@@ -10,9 +10,9 @@ mix docs -f "html"
 rm .gitignore
 
 # add and commit the doc folder
-git add doc && git commit -m "update docs"
+git add -f doc && git commit -m "update docs"
 
 # push the subtree
-git subtree push --prefix doc origin gh-pages
+git push origin `git subtree split --prefix oc origin gh-pages`:gh-pages --force
 
 git reset --hard head
