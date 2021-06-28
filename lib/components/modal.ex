@@ -10,7 +10,7 @@ defmodule CrunchBerry.Components.Modal do
     ~L"""
     <div
       id="<%= @id %>"
-      class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 overflow-y-auto flex items-center"
+      class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 overflow-y-auto flex items-center backdrop-filter backdrop-blur-sm"
       tabindex="-1"
       role="dialog"
       aria-labelledby="<%= @id %>Label"
