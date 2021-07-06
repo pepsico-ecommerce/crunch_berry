@@ -23,7 +23,7 @@ defmodule CrunchBerry.Components.Modal do
         <div class="relative mx-auto my-10 opacity-100 w-11/12 md:max-w-md rounded overflow-y-auto">
           <div class="relative bg-white shadow-lg rounded-md text-gray-900 z-20 flow-root">
            <div>
-             <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: "text-gray-400 text-2xl float-right py-1 px-3 rounded-full cursor-pointer hover:no-underline hover:text-black duration-50", title: "Close" %>
+             <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: "text-gray-400 text-2xl absolute top-0 right-0 py-1 px-3 rounded-full cursor-pointer hover:no-underline hover:text-black duration-50", title: "Close" %>
            </div>
            <%= live_component @socket, @component, @opts %>
           </div>
