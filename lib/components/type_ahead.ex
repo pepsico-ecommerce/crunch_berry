@@ -11,7 +11,7 @@ defmodule CrunchBerry.Components.TypeAhead do
           form: Phoenix.HTML.Form.t(),
           label: String.t(),
           search_text: String.t(),
-          search_results: [] | [String.t()],
+          search_results: [] | [{integer(), String.t()}],
           current_focus: integer()
         }
 
