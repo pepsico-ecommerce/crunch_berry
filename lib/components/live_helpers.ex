@@ -6,6 +6,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
   alias CrunchBerry.Components.Modal
   alias CrunchBerry.Components.Pagination
+  alias CrunchBerry.Components.TypeAhead
 
   @doc """
   Renders a component inside the `CrunchBerry.Components.Modal` component.
@@ -78,5 +79,122 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @spec live_pagination(keyword()) :: Phoenix.LiveView.Component.t()
   def live_pagination(opts) do
     live_component(Pagination, opts)
+  end
+
+  @doc """
+  Renders `CrunchBerry.Components.TypeAhead`.
+
+  ## Options
+  - `form` - required - the containing Phoenix.HTML.Form.
+  - `label` - required - a form label for display purposes
+  - `search_text` - required - this value will be used as the value for the input
+  - `search_results` - required - a list of results from you typeahead search function the require type is `[{integer(), String.t()}]`
+  - `current_focus` - required - a integer pointing to the index of the focused search_result, it shoud default to -1
+  - `placeholder` - optional - You can optionally pass in placeholder text otherwise it defaults to "Searching..."
+
+  ## Examples
+
+    <%= live_type_ahead(form: f, label: "User Search", search_text: @search_text, search_results: @search_results,
+                        current_focus: @current_focus, placeholder: "name or e-mail address...")  %>
+
+  ## Internal Events
+  - `type-ahead-blur` - optional - This `phx-blur` event can be used to clear te drop-down by setting `search_results` to `[]`
+  - `type-ahead-set-focus` - optional - This `phx-window-keydown` event should haandle `%{"key" => "ArrowUp"}` and `%{"key" => "ArrowDown"}`
+  to iceme a decrement `current_focus`.
+  - `type-ahead-select` - optional - This `phx-click` handles clickig `search_results` in the drop-down
+  it passes %{"type-ahead-result" => result_text, "type-ahead-result-id" => result_id, "value" => index_value}
+
+  ## Other events
+  The form that cotains the `live_type_ahead/1` call needs to imlment the following
+  -`phx_change` to search for the text
+  -`phx_submit` this will depend on the purpose of the form
+
+  ## Handling Events
+
+  The following are example event handlers you MIGHT implement. The list is not exhaustive,
+  but should be helpful in getting started.
+
+  ## Examples
+
+    def mount(_params, _session, socket) do
+      assigns = [
+        search_text: "",
+        search_results: [],
+        current_focus: -1
+      ]
+
+      {:ok, assign(socket, assigns)}
+    end
+
+    def handle_event("type-ahead-blur", _, socket) do
+      assigns = [search_results: [], current_focus: -1]
+      {:noreply, assign(socket, assigns)}
+    end
+
+    # this is an example of a `phx_change` handler called "type-ahead-search"
+    def handle_event("type-ahead-search", %{"type_ahead_search" => search}, socket) do
+      results = YourContext.search_functon(search)
+      assigns = [search_text: search, search_results: results]
+      {:noreply, assign(socket(assigns))}
+    end
+
+    # "ArrowDown" is the is the inverse
+    def handle_event("type-ahead-set-focus", %{"key" => "ArrowUp"}, socket) do
+      current_focus = Enum.max([socket.assigns.current_focus - 1, 0])
+      {:noreply, assign(socket, current_focus: current_focus)}
+    end
+
+    # on "Enter" this handler passes values to the submit event for the id
+    # if  a particular element is choosen, otherwise the search text
+    def handle_event("type-ahead-set-focus", %{"key" => "Enter"}, socket) do
+      case Enum.at(socket.assigns.search_results, socket.assigns.current_focus) do
+        {id, _} ->
+          handle_event("YOUR-SUBMIT-EVENT", %{"id" => id}, socket)
+
+        _ ->
+          handle_event("YOUR-SUBMIT-EVENT", %{"type_ahead_search" => socket.assigns.search}, socket)
+      end
+    end
+
+    def handle_event(
+          "type-ahead-select",
+          %{"type-ahead-result" => _, "type-ahead-result-id" => id, "value" => _},
+          socket
+        ) do
+      {:noreply,
+      push_patch(socket,
+        to: Routes.some_path(socket, :SOME_ACTION, %{"id" => id}),
+        replace: true
+      )}
+    end
+
+    def handle_event("YOUR-SUBMIT-EVENT", %{"id" => id}, socket) do
+      {:noreply,
+      push_patch(socket,
+        to: Routes.some_path(socket, :SOME_ACTION, %{"id" => id}),
+        replace: true
+      )}
+    end
+
+    def handle_event("YOUR-SUBMIT-EVENT", %{"type_ahead_search" => search}, socket) do
+      params =
+        if socket.assigns.current_focus == -1 do
+          %{"type_ahead_search" => search}
+        else
+          socket.assigns.params
+        end
+
+      {:noreply,
+      socket
+      |> assign(:current_focus, -1)
+      |> push_patch(
+        to: Routes.some_path(socket, :SOME_ACTION, params),
+        replace: true
+      )}
+    end
+  """
+  @spec live_type_ahead(keyword()) :: Phoenix.LiveView.Component.t()
+  def live_type_ahead(opts) do
+    live_component(TypeAhead, opts)
   end
 end
