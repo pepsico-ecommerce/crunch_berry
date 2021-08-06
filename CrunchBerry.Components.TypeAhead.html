@@ -7,7 +7,7 @@
     <meta name="generator" content="ExDoc v0.24.2">
     <meta name="project" content="crunch_berry v0.1.0">
 
-    <title>CrunchBerry.hello — crunch_berry v0.1.0</title>
+    <title>CrunchBerry.Components.TypeAhead — crunch_berry v0.1.0</title>
     <link rel="stylesheet" href="dist/elixir-a172fe91e725dcb259e2.css" />
 
     <script src="dist/sidebar_items-4a5aab2c21.js"></script>
@@ -79,35 +79,141 @@ crunch_berry
   <div class="content-outer">
     <div id="content" class="content-inner">
 
-<h1>CrunchBerry.hello</h1>
+      <h1>
+CrunchBerry.Components.TypeAhead <small class="app-vsn">(crunch_berry v0.1.0)</small>
 
-<div class="deprecated">
-  You're seeing just the function <code>hello</code>, go back to <a href="CrunchBerry.html">CrunchBerry</a> module for more information.
+      </h1>
+
+
+        <section id="moduledoc">
+<p>Reusable modal component, for use with TailwindCSS</p>
+        </section>
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:args/0">args()</a>
+
+  </div>
+
 </div>
 
-<section class="detail" id="hello/0">
+  </div>
+
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#render/1">render(assigns)</a>
+
+  </div>
+
+    <div class="summary-synopsis"><p>The render function requires the form Struct, a search string, and search_results. The placeholder
+key is optional and defautls to &quot;Search...&quot;.</p></div>
+
+</div>
+
+  </div>
+
+        </section>
+
+
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types
+          </h1>
+          <div class="types-list">
+<section class="detail" id="t:args/0">
 
   <div class="detail-header">
-    <a href="#hello/0" class="detail-link" title="Link to this function">
+    <a href="#t:args/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
+      <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">hello()</h1>
+    <h1 class="signature">args()</h1>
 
 
   </div>
 
   <section class="docstring">
 
-<p>Hello world.</p><h2 id="hello/0-examples" class="section-heading">
-  <a href="#hello/0-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
-  Examples
-</h2>
-<pre><code class="makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">CrunchBerry</span><span class="o">.</span><span class="n">hello</span><span class="p" data-group-id="7963318263-1">(</span><span class="p" data-group-id="7963318263-1">)</span><span class="w">
-</span><span class="ss">:world</span></code></pre>
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>args() :: %{
+  optional(:placeholder) =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  :form =&gt; <a href="https://hexdocs.pm/phoenix_html/2.14.3/Phoenix.HTML.Form.html#t:t/0">Phoenix.HTML.Form.t</a>(),
+  :label =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  :search_text =&gt; <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  :search_results =&gt; [] | [{<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}],
+  :current_focus =&gt; <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()
+}</pre>
+
+      </div>
+
+
   </section>
 </section>
 
+          </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions
+          </h1>
+          <div class="functions-list">
+<section class="detail" id="render/1">
+
+  <div class="detail-header">
+    <a href="#render/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">render(assigns)</h1>
+
+
+  </div>
+
+  <section class="docstring">
+
+      <h2>Specs</h2>
+      <div class="specs">
+
+          <pre>render(<a href="#t:args/0">args</a>()) :: <a href="https://hexdocs.pm/phoenix_live_view/0.15.7/Phoenix.LiveView.Rendered.html#t:t/0">Phoenix.LiveView.Rendered.t</a>()</pre>
+
+      </div>
+
+<p>The render function requires the form Struct, a search string, and search_results. The placeholder
+key is optional and defautls to &quot;Search...&quot;.</p>
+  </section>
+</section>
+
+          </div>
+        </section>
 
       <footer class="footer">
         <p>
