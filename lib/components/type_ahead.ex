@@ -12,12 +12,13 @@ defmodule CrunchBerry.Components.TypeAhead do
           label: String.t(),
           search_text: String.t(),
           search_results: [] | [{integer(), String.t()}],
-          current_focus: integer()
+          current_focus: integer(),
+          target: String.t()
         }
 
   @doc """
-  The render function requires the form Struct, a search string, and search_results. The placeholder
-  key is optional and defautls to "Search...".
+  The render function requires the form Struct, a search string, a target, and search_results. The placeholder
+  key is optional and defaults to "Search...".
   """
   @spec render(args()) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
@@ -43,7 +44,8 @@ defmodule CrunchBerry.Components.TypeAhead do
           <li class="w-full px-2 py-3 cursor-pointer hover:bg-blue-3 hover:text-white <%=is_focus?(idx, assigns) %>"
               phx-click="type-ahead-select"
               phx-value-type-ahead-result-id="<%= id %>"
-              phx-value-type-ahead-result="<%= result %>">
+              phx-value-type-ahead-result="<%= result %>"
+              phx-target="<%= assigns.target %>">
             <%= raw format_search_result(result, assigns.search_text) %>
           </li>
         <% end %>
