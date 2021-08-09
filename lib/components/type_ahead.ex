@@ -13,7 +13,7 @@ defmodule CrunchBerry.Components.TypeAhead do
           search_text: String.t(),
           search_results: [] | [{integer(), String.t()}],
           current_focus: integer(),
-          target: String.t()
+          target: %Phoenix.LiveComponent.CID{}
         }
 
   @doc """
@@ -26,7 +26,7 @@ defmodule CrunchBerry.Components.TypeAhead do
     <div class="px-3 mb-6 md:mb-0" >
       <div class="relative w-full" phx-debounce="blur">
         <%= label assigns.form, assigns.label %>
-        <input class="w-full" type="text" name="type_ahead_search" value="<%= assigns.search_text %>" phx-debounce="500" placeholder="<%= place_holder_or_default(assigns) %>" autocomplete="off" phx-blur="type-ahead-blur"/>
+        <input class="w-full" type="text" name="type_ahead_search" value="<%= assigns.search_text %>" phx-debounce="500" placeholder="<%= place_holder_or_default(assigns) %>" autocomplete="off" phx-blur="type-ahead-blur" <%= phx_target(assigns) %>/>
 
         <%= if show_results?(assigns) do %>
           <%= do_render_drop_down(assigns) %>
@@ -39,13 +39,13 @@ defmodule CrunchBerry.Components.TypeAhead do
   defp do_render_drop_down(assigns) do
     ~L"""
     <div class="absolute z-10 flex flex-col items-start w-full bg-white shadow-md mt-1" role="menu">
-      <ul class="flex flex-col w-full" phx-window-keydown="type-ahead-set-focus">
+      <ul class="flex flex-col w-full" phx-window-keydown="type-ahead-set-focus" <%= phx_target(assigns) %>>
         <%= for {{id, result}, idx} <- Enum.with_index(assigns.search_results) do %>
           <li class="w-full px-2 py-3 cursor-pointer hover:bg-blue-3 hover:text-white <%=is_focus?(idx, assigns) %>"
               phx-click="type-ahead-select"
               phx-value-type-ahead-result-id="<%= id %>"
               phx-value-type-ahead-result="<%= result %>"
-              phx-target="<%= assigns.target %>">
+              <%= phx_target(assigns) %>>
             <%= raw format_search_result(result, assigns.search_text) %>
           </li>
         <% end %>
@@ -72,4 +72,7 @@ defmodule CrunchBerry.Components.TypeAhead do
       "<strong>#{match}</strong>"
     end)
   end
+
+  defp phx_target(%{target: target}), do: "phx-target=\"#{target}\""
+  defp phx_target(_), do: nil
 end
