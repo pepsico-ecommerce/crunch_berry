@@ -26,7 +26,7 @@ defmodule CrunchBerry.Components.TypeAhead do
     <div class="px-3 mb-6 md:mb-0" >
       <div class="relative w-full" phx-debounce="blur">
         <%= label assigns.form, assigns.label %>
-        <input class="w-full" type="text" name="type_ahead_search" value="<%= assigns.search_text %>" phx-debounce="500" placeholder="<%= place_holder_or_default(assigns) %>" autocomplete="off" phx-blur="type-ahead-blur" <%= phx_target(assigns) %>/>
+        <input class="w-full" type="text" name="type_ahead_search" value="<%= assigns.search_text %>" phx-debounce="500" placeholder="<%= place_holder_or_default(assigns) %>" autocomplete="off" phx-blur="type-ahead-blur" <%= phx_target(assigns) %> />
 
         <%= if show_results?(assigns) do %>
           <%= do_render_drop_down(assigns) %>
@@ -73,6 +73,6 @@ defmodule CrunchBerry.Components.TypeAhead do
     end)
   end
 
-  defp phx_target(%{target: target}), do: "phx-target=\"#{target}\""
+  defp phx_target(%{target: target}), do: "phx-target=#{target}"
   defp phx_target(_), do: nil
 end
