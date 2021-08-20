@@ -22,8 +22,6 @@ defmodule CrunchBerry.Components.TypeAhead do
   """
   @spec render(args()) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
-    assigns.form |> IO.inspect(label: "WHAAA")
-
     ~L"""
     <div class="px-3 mb-6 md:mb-0" >
       <div class="relative w-full" phx-debounce="blur">
