@@ -42,6 +42,7 @@ defmodule CrunchBerry.Components.TypeAhead do
       <ul class="flex flex-col w-full" phx-window-keydown="type-ahead-set-focus" <%= phx_target(assigns) %>>
         <%= for {{id, result}, idx} <- Enum.with_index(assigns.search_results) do %>
           <li class="w-full px-2 py-3 cursor-pointer hover:bg-blue-3 hover:text-white <%=is_focus?(idx, assigns) %>"
+              id = "<%= assigns.form.id%>_<%= id %>"
               phx-click="type-ahead-select"
               phx-value-type-ahead-result-id="<%= id %>"
               phx-value-type-ahead-result="<%= result %>"
