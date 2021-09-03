@@ -7,18 +7,18 @@ defmodule CrunchBerry.Components.Modal do
 
   @impl Phoenix.LiveComponent
   def render(assigns) do
-    ~L"""
+    ~H"""
     <div
-      id="<%= @id %>"
+      id={@id}
       class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 overflow-y-auto flex items-center backdrop-filter backdrop-blur-sm"
       tabindex="-1"
       role="dialog"
-      aria-labelledby="<%= @id %>Label"
+      aria-labelledby={"#{@id}Label"}
       aria-modal="true"
       phx-capture-click="close"
       phx-window-keydown="close"
       phx-key="escape"
-      phx-target="#<%= @id %>"
+      phx-target={"##{@id}"}
       phx-page-loading>
         <div class="relative mx-auto my-10 opacity-100 w-11/12 md:max-w-md rounded overflow-y-auto">
           <div class="relative bg-white shadow-lg rounded-md text-gray-900 z-20 flow-root">

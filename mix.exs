@@ -4,7 +4,7 @@ defmodule CrunchBerry.MixProject do
   def project do
     [
       app: :crunch_berry,
-      version: "0.1.0",
+      version: "0.2.0",
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -28,8 +28,8 @@ defmodule CrunchBerry.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_live_view, "~> 0.15.7"},
-      {:phoenix_html, "~> 2.14"},
+      {:phoenix_live_view, ">= 0.16.0"},
+      {:phoenix_html, ">= 3.0.0"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false}
