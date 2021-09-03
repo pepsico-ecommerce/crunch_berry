@@ -90,6 +90,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
   - `search_text` - required - this value will be used as the value for the input
   - `search_results` - required - a list of results from you typeahead search function the require type is `[{integer(), String.t()}]`
   - `current_focus` - required - a integer pointing to the index of the focused search_result, it shoud default to -1
+  - `target` - optional - an HTML selector that refers to the particular usage instance of the typeahead
   - `placeholder` - optional - You can optionally pass in placeholder text otherwise it defaults to "Searching..."
 
   ## Examples

@@ -12,12 +12,13 @@ defmodule CrunchBerry.Components.TypeAhead do
           label: String.t(),
           search_text: String.t(),
           search_results: [] | [{integer(), String.t()}],
-          current_focus: integer()
+          current_focus: integer(),
+          target: %Phoenix.LiveComponent.CID{}
         }
 
   @doc """
-  The render function requires the form Struct, a search string, and search_results. The placeholder
-  key is optional and defautls to "Search...".
+  The render function requires the form Struct, a search string, a target, and search_results. The placeholder
+  key is optional and defaults to "Search...".
   """
   @spec render(args()) :: Phoenix.LiveView.Rendered.t()
   def render(assigns) do
@@ -25,7 +26,7 @@ defmodule CrunchBerry.Components.TypeAhead do
     <div class="px-3 mb-6 md:mb-0" >
       <div class="relative w-full" phx-debounce="blur">
         <%= label assigns.form, assigns.label %>
-        <input class="w-full" type="text" name="type_ahead_search" value="<%= assigns.search_text %>" phx-debounce="500" placeholder="<%= place_holder_or_default(assigns) %>" autocomplete="off" phx-blur="type-ahead-blur"/>
+        <input class="w-full" type="text" name="type_ahead_search" value="<%= assigns.search_text %>" phx-debounce="500" placeholder="<%= place_holder_or_default(assigns) %>" autocomplete="off" phx-blur="type-ahead-blur" <%= phx_target(assigns) %> />
 
         <%= if show_results?(assigns) do %>
           <%= do_render_drop_down(assigns) %>
@@ -38,12 +39,14 @@ defmodule CrunchBerry.Components.TypeAhead do
   defp do_render_drop_down(assigns) do
     ~L"""
     <div class="absolute z-10 flex flex-col items-start w-full bg-white shadow-md mt-1" role="menu">
-      <ul class="flex flex-col w-full" phx-window-keydown="type-ahead-set-focus">
+      <ul class="flex flex-col w-full" phx-window-keydown="type-ahead-set-focus" <%= phx_target(assigns) %>>
         <%= for {{id, result}, idx} <- Enum.with_index(assigns.search_results) do %>
           <li class="w-full px-2 py-3 cursor-pointer hover:bg-blue-3 hover:text-white <%=is_focus?(idx, assigns) %>"
+              id = "<%= assigns.form.id%>_<%= id %>"
               phx-click="type-ahead-select"
               phx-value-type-ahead-result-id="<%= id %>"
-              phx-value-type-ahead-result="<%= result %>">
+              phx-value-type-ahead-result="<%= result %>"
+              <%= phx_target(assigns) %>>
             <%= raw format_search_result(result, assigns.search_text) %>
           </li>
         <% end %>
@@ -70,4 +73,7 @@ defmodule CrunchBerry.Components.TypeAhead do
       "<strong>#{match}</strong>"
     end)
   end
+
+  defp phx_target(%{target: target}), do: "phx-target=#{target}"
+  defp phx_target(_), do: nil
 end
