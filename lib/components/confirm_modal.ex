@@ -1,7 +1,7 @@
 defmodule CrunchBerry.Components.ConfirmModal do
   @moduledoc """
   # ConfirmModal
-  Reusable Cancel/Ok dialog box.  ConfimrmModal is a stateless component
+  Reusable Cancel/Ok dialog box.  ConfirmModal is a stateless component
   that takes a title and a message to display, and then sends a
   `confirm-ok` or `confirm-cancel` event to the hosting live view based on
   user selection.
