@@ -22,3 +22,5 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 crunch_berry-*.tar
 
+priv/plts/dialyzer.plt
+priv/plts/dialyzer.plt.hash
