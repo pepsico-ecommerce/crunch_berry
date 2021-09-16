@@ -1,7 +1,6 @@
 defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
   use ExUnit.Case
   import Phoenix.ConnTest
-  alias CrunchBerry.Components.FlashMessage
   import Phoenix.LiveViewTest
 
   @endpoint CrunchBerry.TestEndpoint
@@ -101,7 +100,6 @@ defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
       end
 
       def handle_event(event, _params, socket) do
-        IO.inspect("Shouldn't be here")
         socket = Phoenix.LiveView.put_flash(socket, :info, "Info flash message")
         {:noreply, assign(socket, message: event)}
       end
@@ -140,7 +138,7 @@ defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
         ~H"""
         <div>
           <div id="flash-content">
-          <%= FlashMessage.render_flash(%{flash: @flash, myself: nil}) %>
+          <%= render_flash(assigns) %>
           </div>
 
           <button phx-click="push-me" phx-value="button">Click</button>
@@ -165,7 +163,6 @@ defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
       end
 
       def handle_event(event, _params, socket) do
-        IO.inspect("I was clicked just fine")
         socket = Phoenix.LiveView.put_flash(socket, :error, "stateless flash error message")
         {:noreply, assign(socket, message: event)}
       end
@@ -177,8 +174,6 @@ defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
       refute html =~ "stateless flash error message"
 
       # click to create the flash message
-      IO.inspect("Clicking")
-
       click_html =
         view
         |> element("button", "Click")
@@ -186,8 +181,6 @@ defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
 
       # Verify that it is there
       assert click_html =~ "stateless flash error message"
-
-      IO.inspect("Dismissing")
 
       dismissed_html =
         view

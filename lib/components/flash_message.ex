@@ -17,14 +17,23 @@ defmodule CrunchBerry.Components.FlashMessage do
 
   Or, if you are using the live_helper
   ```
-  <%= render_flash(%{flash: @flash, myself: @myself}) %>
+  <%= render_flash(assigns) %>
   ```
+
+  ## N.B. Using in a stateless component
+  Note well, in order for change tracking to work in a stateless component,
+  you must pass the flash into the assigns.  See the test `describe "in a stateless component" do`
+  for a full example, but in a nutshell:
+  If StateslessComponentFixture is using the `render_flash/1` then you need to pass in flash to the
+  component for change tracking to work
+  ```
+  <%= live_component StatelessComponentFixture, flash: @flash %>`
+  ```
+
   """
   import Phoenix.LiveView.Helpers
 
   def render_flash(assigns) do
-    IO.inspect(assigns, label: "Rendering")
-
     ~H"""
     <%= render_flash_block(%{flash: @flash, myself: @myself, color: "red", type: :error}) %>
     <%= render_flash_block(%{flash: @flash, myself: @myself, color: "green", type: :info}) %>
