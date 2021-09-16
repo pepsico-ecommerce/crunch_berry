@@ -7,6 +7,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
   alias CrunchBerry.Components.Modal
   alias CrunchBerry.Components.Pagination
   alias CrunchBerry.Components.TypeAhead
+  alias CrunchBerry.Components.FlashMessage
 
   @doc """
   Renders a component inside the `CrunchBerry.Components.Modal` component.
@@ -197,5 +198,40 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @spec live_type_ahead(keyword()) :: Phoenix.LiveView.Component.t()
   def live_type_ahead(opts) do
     live_component(TypeAhead, opts)
+  end
+
+  @doc """
+  Renders markup to display flash messages from `put_live_flash/3`
+
+  Assigns:
+  This function must be called in a particular way every time:
+  Inside of a stateful component -
+  ```
+  <%= render_flash(assigns) %>
+  ```
+
+  ## N.B. Using in a stateless component
+  Note well, in order for change tracking to work in a stateless component,
+  you must pass the flash into the assigns.  See the test `describe "in a stateless component" do`
+  for a full example, but in a nutshell:
+  If StateslessComponentFixture is using the `render_flash/1` then you need to pass in flash to the
+  component for change tracking to work
+  ```
+  <%= live_component StatelessComponentFixture, flash: @flash %>`
+  ```
+
+  """
+  @spec render_flash(any) :: Phoenix.LiveView.Rendered.t()
+  def render_flash(assigns) do
+    case assigns do
+      # When called inside of a stateless component
+      %{flash: _flash, myself: _myself} ->
+        FlashMessage.render_flash(assigns)
+
+      # Handle the case when called outside of a stateful component
+      %{flash: _flash} ->
+        assigns = Map.put(assigns, :myself, nil)
+        FlashMessage.render_flash(assigns)
+    end
   end
 end
