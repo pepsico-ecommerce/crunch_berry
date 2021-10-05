@@ -194,6 +194,19 @@ defmodule CrunchBerry.Components.LiveHelpers do
         replace: true
       )}
     end
+
+  ## Styling
+
+  When integrating TypeAhead into your application, you might find it useful to modify the styles.
+  You can optionally provide a `classes` map, and apply styling to the following keys:
+  - `root` - styles applied to the root element
+  - `container` - styles applied to the dropdown/results container
+  - `label` - styles applied to the label for the input
+  - `input` - styles applied to the input
+  - `results_container` - styles applied to the container for list items
+  - `results_list` - styles applied to the `ul` containing the result items
+  - `results_list_item` - styles applied to the `li`'s inside of the results list
+  - `results_focus` - style applied to the currently active focus item
   """
   @spec live_type_ahead(keyword()) :: Phoenix.LiveView.Component.t()
   def live_type_ahead(opts) do
