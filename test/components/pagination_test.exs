@@ -84,6 +84,24 @@ defmodule CrunchBerry.Components.PaginationTest do
                |> Floki.find("button[aria-label='Previous']")
     end
 
+    test "can change page event name" do
+      assigns = %{
+        name: "unit-test",
+        page: %{
+          page_number: 1,
+          total_pages: 10
+        },
+        classes: %{
+          active: "active-class",
+          text: "text-class"
+        },
+        page_event_name: "other_event"
+      }
+
+      result = render_component(Pagination, assigns)
+      assert result =~ ~s(phx-click="other_event")
+    end
+
     test "different page highlights different number" do
       assigns = %{
         name: "unit-test",
@@ -173,13 +191,8 @@ defmodule CrunchBerry.Components.PaginationTest do
   defmodule PaginationFixture do
     use Phoenix.LiveView
 
-    def mount(_params, _session, socket) do
-      {:ok, assign(socket, message: "None")}
-    end
-
-    def render(assigns) do
-      ~H"""
-      <%= live_component CrunchBerry.Components.Pagination, %{
+    def mount(_params, session, socket) do
+      pagination_args = %{
         name: "unit-test",
         page: %{
           page_number: 1,
@@ -189,7 +202,24 @@ defmodule CrunchBerry.Components.PaginationTest do
           active: "active-class",
           text: "text-class"
         }
-      }%>
+      }
+
+      assigns =
+        if is_map(session) && session["page_event"] do
+          %{
+            message: "None",
+            pagination_args: Map.put(pagination_args, :page_event_name, session["page_event"])
+          }
+        else
+          %{message: "None", pagination_args: pagination_args}
+        end
+
+      {:ok, assign(socket, assigns)}
+    end
+
+    def render(assigns) do
+      ~H"""
+      <%= live_component CrunchBerry.Components.Pagination, @pagination_args %>
       <div>
       click: <%= @message %>
       </div>
@@ -224,6 +254,20 @@ defmodule CrunchBerry.Components.PaginationTest do
         |> render_click()
 
       assert click_html =~ "click: page 3"
+    end
+
+    test "change page event", %{conn: conn} do
+      {:ok, view, html} =
+        live_isolated(conn, PaginationFixture, session: %{"page_event" => "other_event"})
+
+      assert html =~ "click: None"
+
+      click_html =
+        view
+        |> element("button", "2")
+        |> render_click()
+
+      assert click_html =~ "click: other_event 2"
     end
   end
 end
