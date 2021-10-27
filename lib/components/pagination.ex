@@ -9,20 +9,31 @@ defmodule CrunchBerry.Components.Pagination do
   use Phoenix.LiveComponent
 
   @impl Phoenix.LiveComponent
-  def render(assigns) do
-    classes = assigns[:classes] || %{}
+  def update(assigns, socket) do
+    socket =
+      assign(socket,
+        name: assigns.name,
+        page: assigns.page,
+        classes: assigns[:classes] || %{},
+        page_event_name: Map.get(assigns, :page_event_name, "page")
+      )
 
-    ~L"""
+    {:ok, socket}
+  end
+
+  @impl Phoenix.LiveComponent
+  def render(assigns) do
+    ~H"""
     <%= unless @page.total_pages == 1 do %>
-    <nav aria-label="<%= @name %>">
+    <nav aria-label={@name}>
       <ul class="flex list-reset pl-0 rounded">
         <%= if @page.page_number > 1 do %>
           <li>
             <button
-              class="rounded-l border-1 block py-2 px-3 -ml-px <%= classes[:text] %>"
+              class={"rounded-l border-1 block py-2 px-3 -ml-px #{@classes[:text]}"}
               aria-label="Previous"
-              phx-click="page"
-              phx-value-page="<%= @page.page_number - 1 %>">
+              phx-click={@page_event_name}
+              phx-value-page={@page.page_number - 1}>
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
             </button>
@@ -36,9 +47,9 @@ defmodule CrunchBerry.Components.Pagination do
               </span>
             <% else %>
               <button
-                class="<%= round_ends(page_num, @page.page_number, @page.total_pages) %> <%= maybe_active(page_num, @page.page_number, classes) %> border-1 relative block py-2 px-3 -ml-px %>"
-                phx-click="page"
-                phx-value-page="<%= page_num %>">
+                class={"#{round_ends(page_num, @page.page_number, @page.total_pages)} #{maybe_active(page_num, @page.page_number, @classes)} border-1 relative block py-2 px-3 -ml-px"}
+                phx-click={@page_event_name}
+                phx-value-page={page_num}>
                 <%= page_num %>
               </button>
             <% end %>
@@ -47,10 +58,10 @@ defmodule CrunchBerry.Components.Pagination do
       <%= if @page.page_number < @page.total_pages do %>
         <li>
         <button
-          class="rounded-r border-1 block py-2 px-3 -ml-px <%= classes[:text] %>"
+          class={"rounded-r border-1 block py-2 px-3 -ml-px #{@classes[:text]}"}
           aria-label="Next"
-          phx-click="page"
-          phx-value-page="<%= @page.page_number + 1 %>">
+          phx-click={@page_event_name}
+          phx-value-page={@page.page_number + 1}>
             <span aria-hidden="true">&raquo;</span>
             <span class="sr-only">Next</span>
         </button>
