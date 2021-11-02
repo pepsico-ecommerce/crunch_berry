@@ -74,7 +74,7 @@ defmodule CrunchBerry.Components.ConfirmModal do
       <div class="relative mx-auto my-10 opacity-100 w-11/12 md:max-w-md rounded overflow-y-auto">
         <div class="relative bg-white shadow-lg rounded-md text-gray-900 z-20 flow-root">
           <div>
-            <button phx-click={@cancel_event} aria_hidden="true" class="text-gray-400 text-2xl absolute top-0 right-0 py-1 px-3 rounded-full cursor-pointer hover:no-underline hover:text-black duration-50" title: "Close">&times;</button>
+            <button phx-click={@cancel_event} aria_hidden="true" class="text-gray-400 text-2xl absolute top-0 right-0 py-1 px-3 rounded-full cursor-pointer hover:no-underline hover:text-black duration-50" title="Close">&times;</button>
           </div>
           <div class="w-full max-w-lg p-2">
             <h2 class="font-bold block w-full text-center text-grey-darkest mb-2 pt-4"><%= @title %></h2>
