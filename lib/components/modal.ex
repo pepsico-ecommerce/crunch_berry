@@ -25,7 +25,7 @@ defmodule CrunchBerry.Components.Modal do
            <div>
              <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: "text-gray-400 text-2xl absolute top-0 right-0 py-1 px-3 rounded-full cursor-pointer hover:no-underline hover:text-black duration-50", title: "Close" %>
            </div>
-           <%= live_component @socket, @component, @opts %>
+           <%= live_component @component, @opts %>
           </div>
         </div>
     </div>
