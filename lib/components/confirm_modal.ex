@@ -67,8 +67,8 @@ defmodule CrunchBerry.Components.ConfirmModal do
       tabindex="-1"
       role="dialog"
       aria-modal="true"
-      phx-capture-click="close"
-      phx-window-keydown="close"
+      phx-capture-click={@cancel_event}
+      phx-window-keydown={@cancel_event}
       phx-key="escape"
       phx-page-loading>
       <div class="relative mx-auto my-10 opacity-100 w-11/12 md:max-w-md rounded overflow-y-auto">
