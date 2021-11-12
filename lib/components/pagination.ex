@@ -8,13 +8,46 @@ defmodule CrunchBerry.Components.Pagination do
   use Phoenix.HTML
   use Phoenix.LiveComponent
 
+  @type classes :: %{
+          active: String.t(),
+          ellipsis: String.t(),
+          first: String.t(),
+          last: String.t(),
+          list: String.t(),
+          next: String.t(),
+          page: String.t(),
+          previous: String.t(),
+          text: String.t()
+        }
+
+  @first "rounded-l"
+  @last "rounded-r"
+  @button "block border-1 -ml-px px-3 py-2"
+
+  @classes_defaults %{
+    active: "",
+    ellipsis: "block -ml-px px-3 pt-4",
+    first: @first,
+    last: @last,
+    list: "flex rounded",
+    next: "#{@last} #{@button}",
+    page: @button,
+    previous: "#{@first} #{@button}",
+    text: ""
+  }
+
   @impl Phoenix.LiveComponent
   def update(assigns, socket) do
+    classes =
+      assigns
+      |> Map.get(:classes, %{})
+      |> then(fn classes -> Map.merge(@classes_defaults, classes) end)
+
     socket =
       assign(socket,
         name: assigns.name,
         page: assigns.page,
-        classes: assigns[:classes] || %{},
+        classes: classes,
         page_event_name: Map.get(assigns, :page_event_name, "page")
       )
 
@@ -26,11 +59,11 @@ defmodule CrunchBerry.Components.Pagination do
     ~H"""
     <%= unless @page.total_pages == 1 do %>
     <nav aria-label={@name}>
-      <ul class="flex list-reset pl-0 rounded">
+      <ul class={@classes[:list]}>
         <%= if @page.page_number > 1 do %>
           <li>
             <button
-              class={"rounded-l border-1 block py-2 px-3 -ml-px #{@classes[:text]}"}
+              class={"#{@classes[:previous]} #{@classes[:text]}"}
               aria-label="Previous"
               phx-click={@page_event_name}
               phx-value-page={@page.page_number - 1}>
@@ -42,12 +75,12 @@ defmodule CrunchBerry.Components.Pagination do
         <%= for page_num <- page_numbers(@page.page_number, @page.total_pages) do %>
           <li>
             <%= if page_num == "..." do %>
-              <span class="block pt-4 px-3 -ml-px">
+              <span class={@classes[:ellipsis]}>
                 <%= page_num %>
               </span>
             <% else %>
               <button
-                class={"#{round_ends(page_num, @page.page_number, @page.total_pages)} #{maybe_active(page_num, @page.page_number, @classes)} border-1 relative block py-2 px-3 -ml-px"}
+                class={"#{round_ends(page_num, @page.page_number, @page.total_pages)} #{maybe_active(page_num, @page.page_number, @classes)} #{@classes[:page]}"}
                 phx-click={@page_event_name}
                 phx-value-page={page_num}>
                 <%= page_num %>
@@ -58,7 +91,7 @@ defmodule CrunchBerry.Components.Pagination do
       <%= if @page.page_number < @page.total_pages do %>
         <li>
         <button
-          class={"rounded-r border-1 block py-2 px-3 -ml-px #{@classes[:text]}"}
+          class={"#{@classes[:next]} #{@classes[:text]}"}
           aria-label="Next"
           phx-click={@page_event_name}
           phx-value-page={@page.page_number + 1}>
@@ -106,12 +139,12 @@ defmodule CrunchBerry.Components.Pagination do
   defp round_ends(page_index, current_page_number, total_pages) do
     round_leading(page_index, current_page_number) <>
       " " <>
-      round_trailing(current_page_number, total_pages)
+      round_trailing(page_index, current_page_number, total_pages)
   end
 
-  defp round_leading(1 = _page_index, 1 = _current_page_number), do: "rounded-l"
+  defp round_leading(1 = _page_index, 1 = _current_page_number), do: @first
   defp round_leading(_, _), do: ""
 
-  defp round_trailing(last_page, last_page), do: "rounded-r"
-  defp round_trailing(_, _), do: ""
+  defp round_trailing(last_page, last_page, last_page), do: @last
+  defp round_trailing(_, _, _), do: ""
 end

@@ -48,7 +48,14 @@ defmodule CrunchBerry.Components.LiveHelpers do
     In order to customize the look and feel, you may pass in a map.  The following keys are supported:
 
     - active - Classes applied to the currently active page.
-    - text - Classes applied to all children, except the currently active page.
+    - ellipsis - Classes applied to the "..." ellipsis page gap.
+    - first - Classes applied to the first pagination button ("<<" (previous) or page number 1).
+    - last - Classes applied to the last pagination button (">>" (next) or last page number).
+    - list - Classes applied to the containing list.
+    - next - Classes applied to the ">>" next button.
+    - page - Classes applied to page buttons other than the "<<" previous and ">>" next buttons.
+    - previous - Classes applied to the "<<" previous button.
+    - text - Classes applied to all children, except the currently active page and the ellipsis page gap.
 
     ## Pagination
 
