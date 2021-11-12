@@ -57,7 +57,7 @@ defmodule CrunchBerry.Components.Pagination do
   @impl Phoenix.LiveComponent
   def render(assigns) do
     ~H"""
-    <%= unless @page.total_pages == 1 do %>
+    <%= unless @page.total_pages <= 1 do %>
     <nav aria-label={@name}>
       <ul class={@classes[:list]}>
         <%= if @page.page_number > 1 do %>
