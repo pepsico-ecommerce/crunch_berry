@@ -1,16 +1,5 @@
 defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
-  use ExUnit.Case
-  import Phoenix.ConnTest
-  import Phoenix.LiveViewTest
-
-  @endpoint CrunchBerry.TestEndpoint
-
-  setup do
-    conn = build_conn()
-    socket = %Phoenix.LiveView.Socket{}
-    start_supervised!(CrunchBerry.TestEndpoint)
-    {:ok, socket: socket, conn: conn}
-  end
+  use CrunchBerry.ComponentCase
 
   describe "Renders in a view" do
     defmodule LiveViewFixture do
