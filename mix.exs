@@ -34,13 +34,14 @@ defmodule CrunchBerry.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:phoenix_live_view, ">= 0.16.0"},
+      {:phoenix_live_view, ">= 0.16.1"},
       {:phoenix_html, ">= 3.0.0"},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
       {:jason, "~> 1.2", only: [:dev, :test]},
-      {:floki, ">= 0.30.0", only: :test}
+      {:floki, ">= 0.30.0", only: :test},
+      {:timex, "~> 3.7"}
     ]
   end
 end

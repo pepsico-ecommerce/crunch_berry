@@ -8,6 +8,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
   alias CrunchBerry.Components.Pagination
   alias CrunchBerry.Components.TypeAhead
   alias CrunchBerry.Components.FlashMessage
+  alias CrunchBerry.Components.LocalDateTime
 
   @doc """
   Renders a component inside the `CrunchBerry.Components.Modal` component.
@@ -254,4 +255,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
         FlashMessage.render_flash(assigns)
     end
   end
+
+  defdelegate local_datetime(assigns), to: LocalDateTime
+  defdelegate local_timezone(assigns), to: LocalDateTime
 end
