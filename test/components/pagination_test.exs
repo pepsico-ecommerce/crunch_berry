@@ -1,17 +1,7 @@
 defmodule CrunchBerry.Components.PaginationTest do
-  use ExUnit.Case
-  import Phoenix.ConnTest
+  use CrunchBerry.ComponentCase
+
   alias CrunchBerry.Components.Pagination
-  import Phoenix.LiveViewTest
-
-  @endpoint CrunchBerry.TestEndpoint
-
-  setup do
-    conn = build_conn()
-    socket = %Phoenix.LiveView.Socket{}
-    start_supervised!(CrunchBerry.TestEndpoint)
-    {:ok, socket: socket, conn: conn}
-  end
 
   describe "update" do
     test "assigns are set", %{socket: socket} do
