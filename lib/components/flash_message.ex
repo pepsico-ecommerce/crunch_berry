@@ -35,31 +35,37 @@ defmodule CrunchBerry.Components.FlashMessage do
 
   def render_flash(assigns) do
     ~H"""
-    <%= render_flash_block(%{flash: @flash, myself: @myself, color: "red", type: :error}) %>
-    <%= render_flash_block(%{flash: @flash, myself: @myself, color: "green", type: :info}) %>
+    <%= render_flash_block(%{flash: @flash, myself: @myself, type: :error}) %>
+    <%= render_flash_block(%{flash: @flash, myself: @myself, type: :info}) %>
     """
+  end
+
+  defp render_flash_block(%{type: type}) when type not in ~w(info error)a do
+    raise "unrecognized flash type #{type}"
   end
 
   defp render_flash_block(assigns) do
     ~H"""
-    <%= if live_flash(@flash, @type) do %>
-    <div class={"bg-true-#{@color}-50 pt-3 pb-1 px-4"}>
-    <div class="flex">
-    <div class="flex-shrink-0">
-        <span class={"material-icons text-#{@color}-1"}>check_circle</span>
-    </div>
-    <div class="ml-2 mt-0.5">
-        <p class={"text-sm font-medium text-#{@color}-1"}>
-        <%= live_flash(@flash, @type) %>
-        </p>
-    </div>
-    <div class="ml-auto pl-3">
-        <div class="-my-1.5">
-          <%= render_button(%{color: @color, myself: @myself, type: @type}) %>
+    <%= if message = live_flash(@flash, @type) do %>
+      <div class={"pt-3 pb-1 px-4 #{bg_class(@type)}"}>
+        <div class="flex">
+          <div class="flex-shrink-0">
+            <span class={"material-icons #{text_class(@type)}"}>
+              <%= icon(@type) %>
+            </span>
+          </div>
+          <div class="ml-2 mt-0.5">
+            <p class={"text-sm font-medium #{text_class(@type)}"}>
+              <%= message %>
+            </p>
+          </div>
+          <div class="ml-auto pl-3">
+            <div class="-my-1.5">
+              <%= render_button(%{myself: @myself, type: @type}) %>
+            </div>
+          </div>
         </div>
-    </div>
-    </div>
-    </div>
+      </div>
     <% end %>
     """
   end
@@ -67,18 +73,39 @@ defmodule CrunchBerry.Components.FlashMessage do
   defp render_button(assigns) do
     if Map.get(assigns, :myself) do
       ~H"""
-      <button type="button" phx-click="lv:clear-flash" phx-value-key={@type} phx-target={@myself}
-      class={"text-2xl inline-flex px-1.5 pb-0.5 rounded-md text-#{@color}-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-#{@color}-50 focus:ring-#{@color}-1"}>
+      <button type="button"
+        phx-target={@myself}
+        phx-value-key={@type}
+        phx-click="lv:clear-flash"
+        class={"text-2xl inline-flex px-1.5 pb-0.5 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 #{button_class(@type)}"}>
         &times;
       </button>
       """
     else
       ~H"""
-      <button type="button" phx-click="lv:clear-flash" phx-value-key={@type}
-      class={"text-2xl inline-flex px-1.5 pb-0.5 rounded-md text-#{@color}-1 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-#{@color}-50 focus:ring-#{@color}-1"}>
+      <button type="button"
+        phx-value-key={@type}
+        phx-click="lv:clear-flash"
+        class={"text-2xl inline-flex px-1.5 pb-0.5 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 #{button_class(@type)}"}>
         &times;
       </button>
       """
     end
   end
+
+  defp icon(:info), do: "check_circle"
+  defp icon(:error), do: "error"
+
+  # these `*_class` helpers should include the full class name without using string
+  # interpolation, to play nicely with Tailwind JIT purging (make sure to include
+  # `deps/crunch_berry/lib/components/*.ex` in your purge list)
+
+  defp bg_class(:info), do: "bg-green-50"
+  defp bg_class(:error), do: "bg-red-50"
+
+  defp text_class(:info), do: "text-green-1"
+  defp text_class(:error), do: "text-red-1"
+
+  defp button_class(:info), do: "text-green-1 focus:ring-offset-green-50 focus:ring-green-1"
+  defp button_class(:error), do: "text-red-1 focus:ring-offset-red-50 focus:ring-red-1"
 end
