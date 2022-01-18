@@ -1,4 +1,4 @@
-defmodule Optimizer.Api.UserLive.UploadSalesCSV.ConfirmModalTest do
+defmodule CrunchBerry.Components.ConfirmModalTest do
   use CrunchBerry.ComponentCase
 
   alias CrunchBerry.Components.ConfirmModal

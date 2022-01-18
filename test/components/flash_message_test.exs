@@ -1,4 +1,4 @@
-defmodule Optimizer.Api.UserLive.UploadSalesCSV.FlashMessageTest do
+defmodule CrunchBerry.Components.FlashMessageTest do
   use CrunchBerry.ComponentCase
 
   describe "Renders in a view" do
