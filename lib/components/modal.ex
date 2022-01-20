@@ -5,12 +5,36 @@ defmodule CrunchBerry.Components.Modal do
   use Phoenix.HTML
   use Phoenix.LiveComponent
 
+  @classes_defaults %{
+    component:
+      "fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 overflow-y-auto flex items-center backdrop-filter backdrop-blur-sm",
+    container: "relative mx-auto my-10 opacity-100 w-11/12 md:max-w-md rounded overflow-y-auto",
+    background: "relative bg-white shadow-lg rounded-md text-gray-900 z-20 flow-root",
+    cancel_icon:
+      "text-gray-400 text-2xl absolute top-0 right-0 py-1 px-3 rounded-full cursor-pointer hover:no-underline hover:text-black duration-50"
+  }
+
+  @impl Phoenix.LiveComponent
+  def update(assigns, socket) do
+    classes =
+      assigns
+      |> Map.get(:classes, %{})
+      |> then(fn classes -> Map.merge(@classes_defaults, classes) end)
+
+    socket =
+      socket
+      |> assign(assigns)
+      |> assign(:classes, classes)
+
+    {:ok, socket}
+  end
+
   @impl Phoenix.LiveComponent
   def render(assigns) do
     ~H"""
     <div
       id={@id}
-      class="fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 overflow-y-auto flex items-center backdrop-filter backdrop-blur-sm"
+      class={@classes[:component]}
       tabindex="-1"
       role="dialog"
       aria-labelledby={"#{@id}Label"}
@@ -20,10 +44,10 @@ defmodule CrunchBerry.Components.Modal do
       phx-key="escape"
       phx-target={"##{@id}"}
       phx-page-loading>
-        <div class="relative mx-auto my-10 opacity-100 w-11/12 md:max-w-md rounded overflow-y-auto">
-          <div class="relative bg-white shadow-lg rounded-md text-gray-900 z-20 flow-root">
+        <div class={@classes[:container]}>
+          <div class={@classes[:background]}>
            <div>
-             <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: "text-gray-400 text-2xl absolute top-0 right-0 py-1 px-3 rounded-full cursor-pointer hover:no-underline hover:text-black duration-50", title: "Close" %>
+             <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: @classes[:cancel_icon], title: "Close" %>
            </div>
            <%= live_component @component, @opts %>
           </div>

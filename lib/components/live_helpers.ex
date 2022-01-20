@@ -17,13 +17,32 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
   - `id` - required.  The modal is a `Phoenix.LiveComponent`, and needs a specified `id`.
   - `return_to` - required.  This is the route that will be pushed to when the modal is closed,
-  either by the "x" or clicking the background.
+     either by the "x" or clicking the background.
+  - `classes` - overrides to customize the look and feel.  See classes below.
+
+  ## Classes
+  In order to customize the look and feel, you may pass in a map.  The following keys are supported,
+  from outer to inner:
+
+  - component - Classes applied to the outermost component div, with id of @id. By default it is
+    full width and height.
+    default: fixed inset-0 w-full h-full z-20 bg-black bg-opacity-50 overflow-y-auto flex
+             items-center backdrop-filter backdrop-blur-sm
+  - container - Classes applied to the container that sets the width of the modal (11/12 with a max of
+    max-w-md.
+    default: relative mx-auto my-10 opacity-100 w-11/12 md:max-w-md rounded overflow-y-auto
+  - background - Classes applied to the next container that sets the background color.
+    default: relative bg-white shadow-lg rounded-md text-gray-900 z-20 flow-root
+  - cancel_icon - Classes applied to the top right cancel icon (&times;)
+    default: text-gray-400 text-2xl absolute top-0 right-0 py-1 px-3 rounded-full cursor-pointer
+    hover:no-underline hover:text-black duration-50
 
   ## Examples
 
       <%= live_modal MyProjectWeb.WidgetLive.FormComponent,
         id: :new,
-        return_to: Routes.widget_index_path(@socket, :index)
+        return_to: Routes.widget_index_path(@socket, :index),
+        classes: %{ container: "relative mx-auto my-10 opacity-100 rounded overflow-x-auto" }
         # Any option besides id/return_to is passed through to the child component,
         # this is where you can pass in any assigns the child component is going to need.
         action: @live_action
@@ -33,7 +52,10 @@ defmodule CrunchBerry.Components.LiveHelpers do
           Phoenix.LiveView.Component.t()
   def live_modal(component, opts) do
     path = Keyword.fetch!(opts, :return_to)
+    classes = Keyword.get(opts, :classes, nil)
     modal_opts = [id: :modal, return_to: path, component: component, opts: opts]
+    modal_opts = if classes, do: Keyword.merge(modal_opts, classes: classes), else: modal_opts
+
     live_component(Modal, modal_opts)
   end
 
