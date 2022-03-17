@@ -17,7 +17,8 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
   - `id` - required.  The modal is a `Phoenix.LiveComponent`, and needs a specified `id`.
   - `return_to` - optional.  This is the route that will be pushed to when the modal is closed,
-     either by the "x" or clicking the background. Either return_to or phx_target must be specified.
+     either by the "x" or clicking the background. Either return_to or phx_target must be specified, or the close
+     event will be routed to the parent live view.
   - `classes` - overrides to customize the look and feel.  See classes below.
   - `phx_target` - optional. If this value is specified, the component passed into phx_target must implement
      a function to handle the cancel event. This is used if the modal does not implement a return_to route,
