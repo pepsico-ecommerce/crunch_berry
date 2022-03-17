@@ -16,9 +16,13 @@ defmodule CrunchBerry.Components.LiveHelpers do
   ## Options
 
   - `id` - required.  The modal is a `Phoenix.LiveComponent`, and needs a specified `id`.
-  - `return_to` - required.  This is the route that will be pushed to when the modal is closed,
-     either by the "x" or clicking the background.
+  - `return_to` - optional.  This is the route that will be pushed to when the modal is closed,
+     either by the "x" or clicking the background. Either return_to or phx_target must be specified, or the close
+     event will be routed to the parent live view.
   - `classes` - overrides to customize the look and feel.  See classes below.
+  - `phx_target` - optional. If this value is specified, the component passed into phx_target must implement
+     a function to handle the cancel event. This is used if the modal does not implement a return_to route,
+     for instance if the modal is opened and closed via an assign.value versus a route.
 
   ## Classes
   In order to customize the look and feel, you may pass in a map.  The following keys are supported,
@@ -43,6 +47,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
         id: :new,
         return_to: Routes.widget_index_path(@socket, :index),
         classes: %{ container: "relative mx-auto my-10 opacity-100 rounded overflow-x-auto" }
+        phx_target: @myself
         # Any option besides id/return_to is passed through to the child component,
         # this is where you can pass in any assigns the child component is going to need.
         action: @live_action
@@ -51,9 +56,18 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @spec live_modal(any(), keyword) ::
           Phoenix.LiveView.Component.t()
   def live_modal(component, opts) do
-    path = Keyword.fetch!(opts, :return_to)
+    path = Keyword.get(opts, :return_to)
     classes = Keyword.get(opts, :classes, nil)
-    modal_opts = [id: :modal, return_to: path, component: component, opts: opts]
+    phx_target = Keyword.get(opts, :phx_target)
+
+    modal_opts = [
+      id: :modal,
+      return_to: path,
+      phx_target: phx_target,
+      component: component,
+      opts: opts
+    ]
+
     modal_opts = if classes, do: Keyword.merge(modal_opts, classes: classes), else: modal_opts
 
     live_component(Modal, modal_opts)

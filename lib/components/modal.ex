@@ -47,7 +47,19 @@ defmodule CrunchBerry.Components.Modal do
         <div class={@classes[:container]}>
           <div class={@classes[:background]}>
            <div>
-             <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: @classes[:cancel_icon], title: "Close" %>
+            <%= if assigns[:return_to] do %>
+              <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: @classes[:cancel_icon], title: "Close" %>
+            <% else %>
+              <button
+                type="button"
+                aria-hidden="true"
+                class={@classes[:cancel_icon]}
+                title="Close"
+                phx-click="close"
+                phx-target={assigns[:phx_target] || false}>
+                &times;
+              </button>
+            <% end %>
            </div>
            <%= live_component @component, @opts %>
           </div>
