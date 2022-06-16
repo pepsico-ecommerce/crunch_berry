@@ -45,16 +45,18 @@ defmodule CrunchBerry.Components.TypeAhead do
     ~H"""
     <div class={class_or_default(assigns, :root)}>
       <div class={class_or_default(assigns, :container)} phx-debounce="blur">
-        <%= label assigns.form, assigns.label, class: class_or_default(assigns, :label) %>
-        <input class={class_or_default(assigns, :input)}
-               type="text"
-               name="type_ahead_search"
-               value={@search_text}
-               phx-debounce="500"
-               placeholder={place_holder_or_default(assigns)}
-               autocomplete="off"
-               phx-blur="type-ahead-blur"
-               {phx_target(assigns)} />
+        <%= label(assigns.form, assigns.label, class: class_or_default(assigns, :label)) %>
+        <input
+          class={class_or_default(assigns, :input)}
+          type="text"
+          name="type_ahead_search"
+          value={@search_text}
+          phx-debounce="500"
+          placeholder={place_holder_or_default(assigns)}
+          autocomplete="off"
+          phx-blur="type-ahead-blur"
+          {phx_target(assigns)}
+        />
 
         <%= if show_results?(assigns) do %>
           <%= do_render_drop_down(assigns) %>
@@ -67,15 +69,23 @@ defmodule CrunchBerry.Components.TypeAhead do
   defp do_render_drop_down(assigns) do
     ~H"""
     <div class={class_or_default(assigns, :results_container)} role="menu">
-      <ul class={class_or_default(assigns, :results_list)} phx-window-keydown="type-ahead-set-focus" {phx_target(assigns)}>
+      <ul
+        class={class_or_default(assigns, :results_list)}
+        phx-window-keydown="type-ahead-set-focus"
+        {phx_target(assigns)}
+      >
         <%= for {{id, result}, idx} <- Enum.with_index(assigns.search_results) do %>
-          <li class={"#{class_or_default(assigns, :results_list_item)} #{if is_focus?(idx, assigns), do: class_or_default(assigns, :results_focus)}"}
-              id={"#{assigns.form.id}_#{id}"}
-              phx-click="type-ahead-select"
-              phx-value-type-ahead-result-id={id}
-              phx-value-type-ahead-result={result}
-              {phx_target(assigns)}>
-            <%= raw format_search_result(result, assigns.search_text) %>
+          <li
+            class={
+              "#{class_or_default(assigns, :results_list_item)} #{if is_focus?(idx, assigns), do: class_or_default(assigns, :results_focus)}"
+            }
+            id={"#{assigns.form.id}_#{id}"}
+            phx-click="type-ahead-select"
+            phx-value-type-ahead-result-id={id}
+            phx-value-type-ahead-result={result}
+            {phx_target(assigns)}
+          >
+            <%= raw(format_search_result(result, assigns.search_text)) %>
           </li>
         <% end %>
       </ul>

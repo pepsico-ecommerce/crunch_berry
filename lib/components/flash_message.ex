@@ -73,20 +73,28 @@ defmodule CrunchBerry.Components.FlashMessage do
   defp render_button(assigns) do
     if Map.get(assigns, :myself) do
       ~H"""
-      <button type="button"
+      <button
+        type="button"
         phx-target={@myself}
         phx-value-key={@type}
         phx-click="lv:clear-flash"
-        class={"text-2xl inline-flex px-1.5 pb-0.5 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 #{button_class(@type)}"}>
+        class={
+          "text-2xl inline-flex px-1.5 pb-0.5 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 #{button_class(@type)}"
+        }
+      >
         &times;
       </button>
       """
     else
       ~H"""
-      <button type="button"
+      <button
+        type="button"
         phx-value-key={@type}
         phx-click="lv:clear-flash"
-        class={"text-2xl inline-flex px-1.5 pb-0.5 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 #{button_class(@type)}"}>
+        class={
+          "text-2xl inline-flex px-1.5 pb-0.5 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 #{button_class(@type)}"
+        }
+      >
         &times;
       </button>
       """

@@ -43,12 +43,18 @@ defmodule CrunchBerry.Components.Modal do
       phx-window-keydown="close"
       phx-key="escape"
       phx-target={"##{@id}"}
-      phx-page-loading>
-        <div class={@classes[:container]}>
-          <div class={@classes[:background]}>
-           <div>
+      phx-page-loading
+    >
+      <div class={@classes[:container]}>
+        <div class={@classes[:background]}>
+          <div>
             <%= if assigns[:return_to] do %>
-              <%= live_patch raw("&times;"), to: @return_to, aria_hidden: true, class: @classes[:cancel_icon], title: "Close" %>
+              <%= live_patch(raw("&times;"),
+                to: @return_to,
+                aria_hidden: true,
+                class: @classes[:cancel_icon],
+                title: "Close"
+              ) %>
             <% else %>
               <button
                 type="button"
@@ -56,14 +62,15 @@ defmodule CrunchBerry.Components.Modal do
                 class={@classes[:cancel_icon]}
                 title="Close"
                 phx-click="close"
-                phx-target={assigns[:phx_target] || false}>
+                phx-target={assigns[:phx_target] || false}
+              >
                 &times;
               </button>
             <% end %>
-           </div>
-           <%= live_component @component, @opts %>
           </div>
+          <%= live_component(@component, @opts) %>
         </div>
+      </div>
     </div>
     """
   end
