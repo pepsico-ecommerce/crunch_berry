@@ -16,9 +16,6 @@ defmodule CrunchBerry.ComponentCase do
 
         {:ok, socket: socket, conn: conn}
       end
-
-      # default to empty list of assigns
-      defp render_component(component), do: render_component(component, [])
     end
   end
 end
