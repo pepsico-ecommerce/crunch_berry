@@ -31,6 +31,8 @@ defmodule CrunchBerry.Components.Modal do
 
   @impl Phoenix.LiveComponent
   def render(assigns) do
+    phx_target = Map.get(assigns, :phx_target, "id")
+
     ~H"""
     <div
       id={@id}
@@ -42,7 +44,7 @@ defmodule CrunchBerry.Components.Modal do
       phx-capture-click="close"
       phx-window-keydown="close"
       phx-key="escape"
-      phx-target={"##{@id}"}
+      phx-target={"##{phx_target}"}
       phx-page-loading
     >
       <div class={@classes[:container]}>
