@@ -24,3 +24,7 @@ crunch_berry-*.tar
 
 priv/plts/dialyzer.plt
 priv/plts/dialyzer.plt.hash
+
+# Ignore
+crunch_berry_test_app/_build
+crunch_berry_test_app/deps
