@@ -1,0 +1,42 @@
+name: pr-main
+on:
+  pull_request:
+    types:
+      - opened
+      - synchronize
+defaults:
+  run:
+    shell: bash
+jobs:
+  test_run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Determine Elixir Version
+        run: echo "ELIXIR_VERSION=$(grep -h elixir .tool-versions | awk '{ print $2 }' | awk -F - '{print $1}')" >> $GITHUB_ENV
+      - name: Determine Erlang/OTP Version
+        run: echo "OTP_VERSION=$(grep -h erlang .tool-versions | awk '{ print $2 }')" >> $GITHUB_ENV
+      - name: Install Erlang and Elixir
+        uses: erlef/setup-beam@v1
+        with:
+          otp-version: ${{ env.OTP_VERSION }}
+          elixir-version: ${{ env.ELIXIR_VERSION }}
+      - name: Checkout cache
+        uses: actions/cache@v2
+        id: mix-deps-cache
+        with:
+          path: |
+            deps
+            _build
+          key: ${{ runner.os }}-elixir-${{ env.ELIXIR_VERSION }}-otp-${{ env.OTP_VERSION }}-env-${{ env.MIX_ENV }}-mix-deps-${{ hashFiles('**/mix.lock') }}
+      - name: Build Elixir project
+        if: steps.mix-deps-cache.outputs.cache-hit != 'true'
+        run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+          MIX_ENV=dev mix deps.compile
+          MIX_ENV=test mix deps.compile
+      - name: Run mix check
+        run: mix check --except dialyzer
