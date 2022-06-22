@@ -65,7 +65,7 @@ defmodule CrunchBerry.Components.LocalDateTime do
 
   defp format(%{date: nil}), do: "--"
 
-  defp format(assigns = %{date: date}) do
+  defp format(%{date: date} = assigns) do
     # in order for a NaiveDateTime to be treated as UTC, it must first be explicitly
     # converted to "Etc/UTC" (see https://github.com/bitwalker/timex/issues/665#issuecomment-891336790)
     date
