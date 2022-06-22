@@ -10,6 +10,13 @@ defmodule CrunchBerry.MixProject do
       config_path: "./config/config.exs",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      test_coverage: [tool: ExCoveralls],
+      preferred_cli_env: [
+        coveralls: :test,
+        "coveralls.detail": :test,
+        "coveralls.post": :test,
+        "coveralls.html": :test
+      ],
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
       ],
@@ -34,14 +41,28 @@ defmodule CrunchBerry.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      # Phoenix
       {:phoenix_live_view, ">= 0.16.1"},
       {:phoenix_html, ">= 3.0.0"},
+
+      # Utils
+      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
+      {:timex, "~> 3.7"},
+      {:jason, "~> 1.2", only: [:dev, :test]},
+
+      # Test helpers
+      {:floki, ">= 0.30.0", only: :test},
+      {:excoveralls, "~> 0.13", only: :test},
+      {:junit_formatter, "~> 3.1", only: :test},
+
+      # Static analysis
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev], runtime: false},
-      {:ex_doc, "~> 0.24", only: :dev, runtime: false},
-      {:jason, "~> 1.2", only: [:dev, :test]},
-      {:floki, ">= 0.30.0", only: :test},
-      {:timex, "~> 3.7"}
+      {:credo_contrib, "~> 0.2", only: [:dev, :test], runtime: false},
+      {:credo_envvar, "~> 0.1", only: [:dev, :test], runtime: false},
+      {:credo_naming, "~> 2.0", only: [:dev, :test], runtime: false},
+      {:ex_check, "~> 0.12", only: [:dev, :test], runtime: false},
+      {:mix_audit, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 end
