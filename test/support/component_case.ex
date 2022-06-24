@@ -1,4 +1,5 @@
 defmodule CrunchBerry.ComponentCase do
+  @moduledoc false
   use ExUnit.CaseTemplate
 
   using do

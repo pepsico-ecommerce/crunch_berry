@@ -4,11 +4,11 @@ defmodule CrunchBerry.Components.LiveHelpers do
   """
   import Phoenix.LiveView.Helpers
 
+  alias CrunchBerry.Components.FlashMessage
+  alias CrunchBerry.Components.LocalDateTime
   alias CrunchBerry.Components.Modal
   alias CrunchBerry.Components.Pagination
   alias CrunchBerry.Components.TypeAhead
-  alias CrunchBerry.Components.FlashMessage
-  alias CrunchBerry.Components.LocalDateTime
 
   @doc """
   Renders a component inside the `CrunchBerry.Components.Modal` component.
