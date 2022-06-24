@@ -13,7 +13,7 @@ defmodule CrunchBerry.Components.FlashMessageTest do
       def render(assigns) do
         ~H"""
         <div id="flash-content">
-        <%= render_flash(assigns) %>
+          <%= render_flash(assigns) %>
         </div>
 
         <button phx-click="push-me" phx-value="button">Click</button>
@@ -58,7 +58,7 @@ defmodule CrunchBerry.Components.FlashMessageTest do
       ~H"""
       <div>
         <div id="flash-content">
-        <%= render_flash(assigns) %>
+          <%= render_flash(assigns) %>
         </div>
 
         <button phx-click="push-me" phx-value="button" phx-target={@myself}>Click</button>
@@ -83,7 +83,7 @@ defmodule CrunchBerry.Components.FlashMessageTest do
       def render(assigns) do
         ~H"""
         <div>
-        <%= live_component ComponentFixture, id: "test-fixture" %>
+          <%= live_component(ComponentFixture, id: "test-fixture") %>
         </div>
         """
       end
@@ -127,7 +127,7 @@ defmodule CrunchBerry.Components.FlashMessageTest do
         ~H"""
         <div>
           <div id="flash-content">
-          <%= render_flash(assigns) %>
+            <%= render_flash(assigns) %>
           </div>
 
           <button phx-click="push-me" phx-value="button">Click</button>
@@ -146,7 +146,7 @@ defmodule CrunchBerry.Components.FlashMessageTest do
       def render(assigns) do
         ~H"""
         <div>
-        <%= live_component StatelessComponentFixture, flash: @flash %>
+          <%= live_component(StatelessComponentFixture, flash: @flash) %>
         </div>
         """
       end
