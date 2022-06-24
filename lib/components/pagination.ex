@@ -58,50 +58,55 @@ defmodule CrunchBerry.Components.Pagination do
   def render(assigns) do
     ~H"""
     <%= unless @page.total_pages <= 1 do %>
-    <nav aria-label={@name}>
-      <ul class={@classes[:list]}>
-        <%= if @page.page_number > 1 do %>
-          <li>
-            <button
-              class={"#{@classes[:previous]} #{@classes[:text]}"}
-              aria-label="Previous"
-              phx-click={@page_event_name}
-              phx-value-page={@page.page_number - 1}>
+      <nav aria-label={@name}>
+        <ul class={@classes[:list]}>
+          <%= if @page.page_number > 1 do %>
+            <li>
+              <button
+                class={"#{@classes[:previous]} #{@classes[:text]}"}
+                aria-label="Previous"
+                phx-click={@page_event_name}
+                phx-value-page={@page.page_number - 1}
+              >
                 <span aria-hidden="true">&laquo;</span>
                 <span class="sr-only">Previous</span>
-            </button>
-          </li>
-        <% end %>
-        <%= for page_num <- page_numbers(@page.page_number, @page.total_pages) do %>
-          <li>
-            <%= if page_num == "..." do %>
-              <span class={@classes[:ellipsis]}>
-                <%= page_num %>
-              </span>
-            <% else %>
-              <button
-                class={"#{round_ends(page_num, @page.page_number, @page.total_pages)} #{maybe_active(page_num, @page.page_number, @classes)} #{@classes[:page]}"}
-                phx-click={@page_event_name}
-                phx-value-page={page_num}>
-                <%= page_num %>
               </button>
-            <% end %>
-          </li>
-        <% end %>
-      <%= if @page.page_number < @page.total_pages do %>
-        <li>
-        <button
-          class={"#{@classes[:next]} #{@classes[:text]}"}
-          aria-label="Next"
-          phx-click={@page_event_name}
-          phx-value-page={@page.page_number + 1}>
-            <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
-        </button>
-        </li>
-      <% end %>
-      </ul>
-    </nav>
+            </li>
+          <% end %>
+          <%= for page_num <- page_numbers(@page.page_number, @page.total_pages) do %>
+            <li>
+              <%= if page_num == "..." do %>
+                <span class={@classes[:ellipsis]}>
+                  <%= page_num %>
+                </span>
+              <% else %>
+                <button
+                  class={
+                    "#{round_ends(page_num, @page.page_number, @page.total_pages)} #{maybe_active(page_num, @page.page_number, @classes)} #{@classes[:page]}"
+                  }
+                  phx-click={@page_event_name}
+                  phx-value-page={page_num}
+                >
+                  <%= page_num %>
+                </button>
+              <% end %>
+            </li>
+          <% end %>
+          <%= if @page.page_number < @page.total_pages do %>
+            <li>
+              <button
+                class={"#{@classes[:next]} #{@classes[:text]}"}
+                aria-label="Next"
+                phx-click={@page_event_name}
+                phx-value-page={@page.page_number + 1}
+              >
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </button>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
     <% end %>
     """
   end
