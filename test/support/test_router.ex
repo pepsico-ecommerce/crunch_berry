@@ -22,5 +22,8 @@ defmodule CrunchBerry.Router do
 
   scope "/", CrunchBerry.LiveViewTest do
     pipe_through [:browser]
+
+    # integration modal
+    live("/modal", ModalLive)
   end
 end
