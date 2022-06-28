@@ -27,7 +27,6 @@ defmodule CrunchBerry.Components.LocalDateTime do
 
   @default_format "{Mshort} {D}, {YY} {h12}:{m}{am}"
 
-  @doc false
   @spec local_datetime(map()) :: any()
   def local_datetime(assigns) when not is_map_key(assigns, :date) do
     raise "`date` assign must be provided"
