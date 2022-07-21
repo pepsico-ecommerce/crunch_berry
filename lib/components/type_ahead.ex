@@ -49,12 +49,14 @@ defmodule CrunchBerry.Components.TypeAhead do
         <input
           class={class_or_default(assigns, :input)}
           type="text"
+          id={"type_ahead_search_#{@id}"}
           name="type_ahead_search"
           value={@search_text}
           phx-debounce="500"
           placeholder={place_holder_or_default(assigns)}
           autocomplete="off"
           phx-blur="type-ahead-blur"
+          phx-value-type-ahead-id={assigns.id}
           {phx_target(assigns)}
         />
 
@@ -83,6 +85,7 @@ defmodule CrunchBerry.Components.TypeAhead do
             phx-click="type-ahead-select"
             phx-value-type-ahead-result-id={id}
             phx-value-type-ahead-result={result}
+            phx-value-type-ahead-id={assigns.id}
             {phx_target(assigns)}
           >
             <%= raw(format_search_result(result, assigns.search_text)) %>
