@@ -62,7 +62,7 @@ defmodule CrunchBerry.MixProject do
       {:credo_envvar, "~> 0.1", only: [:dev, :test], runtime: false},
       {:credo_naming, "~> 2.0", only: [:dev, :test], runtime: false},
       {:ex_check, "~> 0.12", only: [:dev, :test], runtime: false},
-      {:mix_audit, "~> 1.0", only: [:dev, :test], runtime: false}
+      {:mix_audit, "~> 2.0", only: [:dev, :test], runtime: false}
     ]
   end
 end
