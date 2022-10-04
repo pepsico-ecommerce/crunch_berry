@@ -31,7 +31,8 @@ defmodule CrunchBerry.Components.Modal do
 
   @impl Phoenix.LiveComponent
   def render(assigns) do
-    phx_target = Map.get(assigns, :phx_target, "id")
+    phx_target_with_default = Map.get(assigns, :phx_target, "id")
+    assigns = Map.put(assigns, :phx_target_with_default, phx_target_with_default)
 
     ~H"""
     <div
@@ -44,7 +45,7 @@ defmodule CrunchBerry.Components.Modal do
       phx-capture-click="close"
       phx-window-keydown="close"
       phx-key="escape"
-      phx-target={"##{phx_target}"}
+      phx-target={"##{@phx_target_with_default}"}
       phx-page-loading
     >
       <div class={@classes[:container]}>
