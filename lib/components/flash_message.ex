@@ -31,7 +31,7 @@ defmodule CrunchBerry.Components.FlashMessage do
   ```
 
   """
-  import Phoenix.LiveView.Helpers
+  import Phoenix.Component
 
   def render_flash(assigns) do
     ~H"""
