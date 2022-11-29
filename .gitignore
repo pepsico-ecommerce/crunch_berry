@@ -24,3 +24,6 @@ crunch_berry-*.tar
 
 priv/plts/dialyzer.plt
 priv/plts/dialyzer.plt.hash
+
+# JetBrains IDE
+.idea/

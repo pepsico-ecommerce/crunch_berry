@@ -55,7 +55,7 @@ defmodule CrunchBerry.Components.TypeAhead do
           phx-debounce="500"
           placeholder={place_holder_or_default(assigns)}
           autocomplete="off"
-          phx-blur="type-ahead-blur"
+          phx-change="type-ahead-blur"
           phx-value-type-ahead-id={assigns.id}
           {phx_target(assigns)}
         />
