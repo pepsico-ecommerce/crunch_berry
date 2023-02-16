@@ -44,7 +44,7 @@ defmodule CrunchBerry.Components.TypeAhead do
   def render(assigns) do
     ~H"""
     <div class={class_or_default(assigns, :root)}>
-      <div class={class_or_default(assigns, :container)} phx-debounce="blur">
+      <div class={class_or_default(assigns, :container)} >
         <%= label(assigns.form, assigns.label, class: class_or_default(assigns, :label)) %>
         <input
           class={class_or_default(assigns, :input)}
