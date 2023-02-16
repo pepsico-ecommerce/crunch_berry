@@ -144,7 +144,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
                         current_focus: @current_focus, placeholder: "name or e-mail address...")  %>
 
   ## Internal Events
-  - `type-ahead-blur` - optional - This `phx-blur` event can be used to clear te drop-down by setting `search_results` to `[]`
+  - `type-ahead-click-away` - optional - This `phx-click-away` event can be used to clear te drop-down by setting `search_results` to `[]`
   - `type-ahead-set-focus` - optional - This `phx-window-keydown` event should haandle `%{"key" => "ArrowUp"}` and `%{"key" => "ArrowDown"}`
   to iceme a decrement `current_focus`.
   - `type-ahead-select` - optional - This `phx-click` handles clickig `search_results` in the drop-down

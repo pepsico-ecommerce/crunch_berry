@@ -55,7 +55,6 @@ defmodule CrunchBerry.Components.TypeAhead do
           phx-debounce="500"
           placeholder={place_holder_or_default(assigns)}
           autocomplete="off"
-          phx-blur="type-ahead-blur"
           phx-value-type-ahead-id={assigns.id}
           {phx_target(assigns)}
         />
@@ -83,6 +82,7 @@ defmodule CrunchBerry.Components.TypeAhead do
             }
             id={"#{assigns.form.id}_#{id}"}
             phx-click="type-ahead-select"
+            phx-click-away="type-ahead-click-away"
             phx-value-type-ahead-result-id={id}
             phx-value-type-ahead-result={result}
             phx-value-type-ahead-id={assigns.id}
