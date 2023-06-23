@@ -71,7 +71,7 @@ defmodule CrunchBerry.Components.Modal do
               </button>
             <% end %>
           </div>
-          <%= live_component(@component, @opts) %>
+          <.live_component id={"#{@id}-component"} module={@component} {@opts} />
         </div>
       </div>
     </div>

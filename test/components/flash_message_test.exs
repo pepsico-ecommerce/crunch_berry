@@ -146,7 +146,7 @@ defmodule CrunchBerry.Components.FlashMessageTest do
       def render(assigns) do
         ~H"""
         <div>
-          <%= live_component(StatelessComponentFixture, flash: @flash) %>
+          <.live_component module={StatelessComponentFixture} id="flash-message" flash={@flash} />
         </div>
         """
       end
