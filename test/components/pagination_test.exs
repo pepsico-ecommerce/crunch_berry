@@ -209,7 +209,11 @@ defmodule CrunchBerry.Components.PaginationTest do
 
     def render(assigns) do
       ~H"""
-      <%= live_component(CrunchBerry.Components.Pagination, @pagination_args) %>
+      <.live_component
+        id="pagination-component"
+        module={CrunchBerry.Components.Pagination}
+        {@pagination_args}
+      />
       <div>
         click: <%= @message %>
       </div>

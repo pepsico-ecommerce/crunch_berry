@@ -6,7 +6,7 @@
   ## list of tools (see `mix check` docs for a list of default curated tools)
   tools: [
     {:credo, "mix credo -a"},
-    {:ex_unit, "mix coveralls"},
+    {:ex_unit, "mix coveralls --warnings-as-errors"},
     {:audit, "mix deps.audit"},
   ]
 ]

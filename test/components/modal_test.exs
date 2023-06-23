@@ -1,8 +1,6 @@
 defmodule CrunchBerry.Components.ModalTest do
   use CrunchBerry.ComponentCase
 
-  import Phoenix.LiveView.Helpers
-
   alias CrunchBerry.Components.Modal
 
   defmodule FixtureComponent do
