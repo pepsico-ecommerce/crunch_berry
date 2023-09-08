@@ -42,7 +42,7 @@ defmodule CrunchBerry.LiveViewTest.ModalLive do
           <% @params["phx_target"] -> %>
             <.live_modal component={ModalComponent} id="otter" phx_target={@params["phx_target"]} />
           <% true -> %>
-            <.live_modal component={ModalComponent} id="otter") />
+            <.live_modal component={ModalComponent} id="otter" />
         <% end %>
       <% end %>
       <%= if Map.has_key?(assigns, :message) do %>
