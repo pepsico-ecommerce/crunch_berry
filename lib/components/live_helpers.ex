@@ -2,7 +2,6 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @moduledoc """
   Helpers for LiveViews.
   """
-  import Phoenix.LiveView.Helpers
   import Phoenix.Component
 
   alias CrunchBerry.Components.FlashMessage
@@ -58,8 +57,14 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @spec live_modal(map) :: Phoenix.LiveView.Component.t()
   def live_modal(assigns) do
     assigns
-    |> Map.merge(%{id: :modal, module: Modal, opts: assigns})
+    |> Map.merge(%{id: "modal-#{unique_id()}", module: Modal, opts: assigns})
     |> live_component()
+  end
+
+  defp unique_id do
+    make_ref()
+    |> inspect()
+    |> String.replace(~r"#Reference\<(\d+)\.(\d+)\.(\d+)\.(\d+)\>", "\\1_\\2_\\3_\\4")
   end
 
   @doc """
@@ -114,7 +119,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @spec live_pagination(map) :: Phoenix.LiveView.Component.t()
   def live_pagination(assigns) do
     assigns
-    |> Map.merge(%{id: :pagination, module: Pagination})
+    |> Map.merge(%{id: "pagination-#{unique_id()}", module: Pagination})
     |> live_component()
   end
 
@@ -247,7 +252,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @spec live_type_ahead(map) :: Phoenix.LiveView.Component.t()
   def live_type_ahead(assigns) do
     assigns
-    |> Map.merge(%{id: :type_ahead, module: TypeAhead})
+    |> Map.merge(%{id: "type-ahead-#{unique_id()}", module: TypeAhead})
     |> live_component()
   end
 
