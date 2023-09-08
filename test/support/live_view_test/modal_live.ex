@@ -24,7 +24,7 @@ defmodule CrunchBerry.LiveViewTest.ModalLive do
     end
   end
 
-  alias CrunchBerry.Components.LiveHelpers
+  import CrunchBerry.Components.LiveHelpers
 
   def mount(params, _, socket) do
     socket = assign(socket, :params, params)
@@ -38,11 +38,11 @@ defmodule CrunchBerry.LiveViewTest.ModalLive do
       <%= if @params["show"] do %>
         <%= cond do %>
           <% @params["return_to"] -> %>
-            <%= LiveHelpers.live_modal(ModalComponent, id: "otter", return_to: @params["return_to"]) %>
+            <.live_modal component={ModalComponent} id="otter" return_to={@params["return_to"]} />
           <% @params["phx_target"] -> %>
-            <%= LiveHelpers.live_modal(ModalComponent, id: "otter", phx_target: @params["phx_target"]) %>
+            <.live_modal component={ModalComponent} id="otter" phx_target={@params["phx_target"]} />
           <% true -> %>
-            <%= LiveHelpers.live_modal(ModalComponent, id: "otter") %>
+            <.live_modal component={ModalComponent} id="otter") />
         <% end %>
       <% end %>
       <%= if Map.has_key?(assigns, :message) do %>

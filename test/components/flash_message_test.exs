@@ -83,7 +83,7 @@ defmodule CrunchBerry.Components.FlashMessageTest do
       def render(assigns) do
         ~H"""
         <div>
-          <%= live_component(ComponentFixture, id: "test-fixture") %>
+          <.live_component module={ComponentFixture}, id="test-fixture" />
         </div>
         """
       end

@@ -21,9 +21,12 @@ defmodule CrunchBerry.Components.ConfirmModal do
   ```
   ...
     <%= if @reupload do %>
-    <%= live_component CrunchBerry.Components.ConfirmModal,
-      title: "Re-upload CSV",
-      message: "This will clear the current session, and replace it with a new csv file." %>
+    <.live_component
+      id="my-confirm-modal"
+      module={CrunchBerry.Components.ConfirmModal}
+      title="Re-upload CSV"
+      message="This will clear the current session, and replace it with a new csv file."
+    />
     <% end %>
   ...
   ```
