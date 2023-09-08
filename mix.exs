@@ -4,7 +4,7 @@ defmodule CrunchBerry.MixProject do
   def project do
     [
       app: :crunch_berry,
-      version: "0.4.6",
+      version: "0.5.0",
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       config_path: "./config/config.exs",
