@@ -102,17 +102,20 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
     ## Examples
 
-      <%= live_pagination name: "My Cool Pagination",
-      page: @page,
-      classes: %{
-        active: "bg-blue hover:bg-blue-900 text-white",
-        text: "bg-white text-blue hover:bg-gray-100"
-      }
-       %>
+      <.live_pagination
+        name="My Cool Pagination",
+        page={@page}
+        classes={%{
+          active: "bg-blue hover:bg-blue-900 text-white",
+          text: "bg-white text-blue hover:bg-gray-100"
+        }}
+      />
   """
-  @spec live_pagination(keyword()) :: Phoenix.LiveView.Component.t()
-  def live_pagination(opts) do
-    live_component(Pagination, opts)
+  @spec live_pagination(map) :: Phoenix.LiveView.Component.t()
+  def live_pagination(assigns) do
+    assigns
+    |> Map.merge(%{id: :pagination, module: Pagination})
+    |> live_component()
   end
 
   @doc """
