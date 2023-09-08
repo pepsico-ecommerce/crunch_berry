@@ -132,8 +132,8 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
   ## Examples
 
-    <%= live_type_ahead(form: f, label: "User Search", search_text: @search_text, search_results: @search_results,
-                        current_focus: @current_focus, placeholder: "name or e-mail address...")  %>
+    <.live_type_ahead form={f} label="User Search" search_text={@search_text} search_results={@search_results}
+                        current_focus={@current_focus} placeholder="name or e-mail address...")  />
 
   ## Internal Events
   - `type-ahead-click-away` - optional - This `phx-click-away` event can be used to clear te drop-down by setting `search_results` to `[]`
@@ -244,9 +244,11 @@ defmodule CrunchBerry.Components.LiveHelpers do
   - `results_list_item` - styles applied to the `li`'s inside of the results list
   - `results_focus` - style applied to the currently active focus item
   """
-  @spec live_type_ahead(keyword()) :: Phoenix.LiveView.Component.t()
-  def live_type_ahead(opts) do
-    live_component(TypeAhead, opts)
+  @spec live_type_ahead(map) :: Phoenix.LiveView.Component.t()
+  def live_type_ahead(assigns) do
+    assigns
+    |> Map.merge(%{id: :type_ahead, module: TypeAhead})
+    |> live_component()
   end
 
   @doc """
