@@ -27,7 +27,7 @@ defmodule CrunchBerry.Components.FlashMessage do
   If StateslessComponentFixture is using the `render_flash/1` then you need to pass in flash to the
   component for change tracking to work
   ```
-  <%= live_component StatelessComponentFixture, flash: @flash %>`
+  <.live_component id="my-component" module={StatelessComponentFixture} flash={@flash}/>`
   ```
 
   """

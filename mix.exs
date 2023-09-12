@@ -4,7 +4,7 @@ defmodule CrunchBerry.MixProject do
   def project do
     [
       app: :crunch_berry,
-      version: "0.4.5",
+      version: "0.5.0",
       elixir: "~> 1.10",
       elixirc_paths: elixirc_paths(Mix.env()),
       config_path: "./config/config.exs",
@@ -42,7 +42,7 @@ defmodule CrunchBerry.MixProject do
   defp deps do
     [
       # Phoenix
-      {:phoenix_live_view, ">= 0.18.2"},
+      {:phoenix_live_view, "~> 0.19.0"},
       {:phoenix_html, ">= 3.0.0"},
 
       # Utils

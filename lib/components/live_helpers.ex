@@ -2,7 +2,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
   @moduledoc """
   Helpers for LiveViews.
   """
-  import Phoenix.LiveView.Helpers
+  import Phoenix.Component
 
   alias CrunchBerry.Components.FlashMessage
   alias CrunchBerry.Components.LocalDateTime
@@ -43,34 +43,28 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
   ## Examples
 
-      <%= live_modal MyProjectWeb.WidgetLive.FormComponent,
-        id: :new,
-        return_to: Routes.widget_index_path(@socket, :index),
-        classes: %{ container: "relative mx-auto my-10 opacity-100 rounded overflow-x-auto" }
-        phx_target: @myself
-        # Any option besides id/return_to is passed through to the child component,
+      <.live_modal
+        component={MyProjectWeb.WidgetLive.FormComponent}
+        id={:new}
+        return_to={Routes.widget_index_path(@socket, :index)}
+        classes={%{container: "relative mx-auto my-10 opacity-100 rounded overflow-x-auto"}}
+        phx_target={@myself}
+        # Any option besides id/return_to is passed through to the child component
         # this is where you can pass in any assigns the child component is going to need.
-        action: @live_action
-         %>
+        action={@live_action}
+      />
   """
-  @spec live_modal(any(), keyword) ::
-          Phoenix.LiveView.Component.t()
-  def live_modal(component, opts) do
-    path = Keyword.get(opts, :return_to)
-    classes = Keyword.get(opts, :classes, nil)
-    phx_target = Keyword.get(opts, :phx_target)
+  @spec live_modal(map) :: Phoenix.LiveView.Component.t()
+  def live_modal(assigns) do
+    assigns
+    |> Map.merge(%{id: "modal-#{unique_id()}", module: Modal, opts: assigns})
+    |> live_component()
+  end
 
-    modal_opts = [
-      id: :modal,
-      return_to: path,
-      phx_target: phx_target,
-      component: component,
-      opts: opts
-    ]
-
-    modal_opts = if classes, do: Keyword.merge(modal_opts, classes: classes), else: modal_opts
-
-    live_component(Modal, modal_opts)
+  defp unique_id do
+    make_ref()
+    |> inspect()
+    |> String.replace(~r"#Reference\<(\d+)\.(\d+)\.(\d+)\.(\d+)\>", "\\1_\\2_\\3_\\4")
   end
 
   @doc """
@@ -113,17 +107,20 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
     ## Examples
 
-      <%= live_pagination name: "My Cool Pagination",
-      page: @page,
-      classes: %{
-        active: "bg-blue hover:bg-blue-900 text-white",
-        text: "bg-white text-blue hover:bg-gray-100"
-      }
-       %>
+      <.live_pagination
+        name="My Cool Pagination",
+        page={@page}
+        classes={%{
+          active: "bg-blue hover:bg-blue-900 text-white",
+          text: "bg-white text-blue hover:bg-gray-100"
+        }}
+      />
   """
-  @spec live_pagination(keyword()) :: Phoenix.LiveView.Component.t()
-  def live_pagination(opts) do
-    live_component(Pagination, opts)
+  @spec live_pagination(map) :: Phoenix.LiveView.Component.t()
+  def live_pagination(assigns) do
+    assigns
+    |> Map.merge(%{id: "pagination-#{unique_id()}", module: Pagination})
+    |> live_component()
   end
 
   @doc """
@@ -140,8 +137,8 @@ defmodule CrunchBerry.Components.LiveHelpers do
 
   ## Examples
 
-    <%= live_type_ahead(form: f, label: "User Search", search_text: @search_text, search_results: @search_results,
-                        current_focus: @current_focus, placeholder: "name or e-mail address...")  %>
+    <.live_type_ahead form={f} label="User Search" search_text={@search_text} search_results={@search_results}
+                        current_focus={@current_focus} placeholder="name or e-mail address...")  />
 
   ## Internal Events
   - `type-ahead-click-away` - optional - This `phx-click-away` event can be used to clear te drop-down by setting `search_results` to `[]`
@@ -252,9 +249,11 @@ defmodule CrunchBerry.Components.LiveHelpers do
   - `results_list_item` - styles applied to the `li`'s inside of the results list
   - `results_focus` - style applied to the currently active focus item
   """
-  @spec live_type_ahead(keyword()) :: Phoenix.LiveView.Component.t()
-  def live_type_ahead(opts) do
-    live_component(TypeAhead, opts)
+  @spec live_type_ahead(map) :: Phoenix.LiveView.Component.t()
+  def live_type_ahead(assigns) do
+    assigns
+    |> Map.merge(%{id: "type-ahead-#{unique_id()}", module: TypeAhead})
+    |> live_component()
   end
 
   @doc """
@@ -274,7 +273,7 @@ defmodule CrunchBerry.Components.LiveHelpers do
   If StateslessComponentFixture is using the `render_flash/1` then you need to pass in flash to the
   component for change tracking to work
   ```
-  <%= live_component StatelessComponentFixture, flash: @flash %>`
+  <.live_component id="my-component" module={StatelessComponentFixture} flash={@flash} />
   ```
 
   """

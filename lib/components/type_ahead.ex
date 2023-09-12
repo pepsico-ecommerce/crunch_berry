@@ -113,7 +113,7 @@ defmodule CrunchBerry.Components.TypeAhead do
     end)
   end
 
-  defp phx_target(%{target: target}), do: [phx_target: target]
+  defp phx_target(%{target: target}), do: ["phx-target": target]
   defp phx_target(_), do: []
 
   defp class_or_default(%{classes: classes}, key) do
