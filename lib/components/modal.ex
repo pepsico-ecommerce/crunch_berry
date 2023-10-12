@@ -52,12 +52,14 @@ defmodule CrunchBerry.Components.Modal do
         <div class={@classes[:background]}>
           <div>
             <%= if assigns[:return_to] do %>
-              <%= live_patch(raw("&times;"),
-                to: @return_to,
-                aria_hidden: true,
-                class: @classes[:cancel_icon],
-                title: "Close"
-              ) %>
+              <.link
+                patch={@return_to}
+                aria-hidden="true"
+                class={@classes[:cancel_icon]}
+                title="Close"
+              >
+                <%= raw("&times;") %>
+              </.link>
             <% else %>
               <button
                 type="button"

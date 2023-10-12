@@ -42,7 +42,7 @@ defmodule CrunchBerry.MixProject do
   defp deps do
     [
       # Phoenix
-      {:phoenix_live_view, "~> 0.19.0"},
+      {:phoenix_live_view, ">= 0.19.0"},
       {:phoenix_html, ">= 3.0.0"},
 
       # Utils
