@@ -10,7 +10,7 @@ by adding `crunch_berry` to your list of dependencies in `mix.exs`:
 ```elixir
 def deps do
   [
-    {:crunch_berry, "~> 0.4.5"}
+    {:crunch_berry, "~> 0.6.0"}
   ]
 end
 ```
