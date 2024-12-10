@@ -215,7 +215,7 @@ defmodule CrunchBerry.Components.PaginationTest do
         {@pagination_args}
       />
       <div>
-        click: <%= @message %>
+        click: {@message}
       </div>
       """
     end

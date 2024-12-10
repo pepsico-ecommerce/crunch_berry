@@ -17,7 +17,6 @@ defmodule CrunchBerry.Router do
   pipeline :browser do
     plug :setup_session
     plug :accepts, ["html"]
-    plug :fetch_live_flash
   end
 
   scope "/", CrunchBerry.LiveViewTest do

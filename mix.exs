@@ -42,8 +42,8 @@ defmodule CrunchBerry.MixProject do
   defp deps do
     [
       # Phoenix
-      {:phoenix_live_view, ">= 0.19.0"},
-      {:phoenix_html, ">= 3.0.0"},
+      {:phoenix_live_view, ">= 1.0.0"},
+      {:phoenix_html, ">= 4.0.0"},
 
       # Utils
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
@@ -51,7 +51,7 @@ defmodule CrunchBerry.MixProject do
       {:jason, "~> 1.2", only: [:dev, :test]},
 
       # Test helpers
-      {:floki, ">= 0.30.0", only: :test},
+      {:floki, ">= 0.36.0", only: :test},
       {:excoveralls, "~> 0.13", only: :test},
       {:junit_formatter, "~> 3.1", only: :test},
 

@@ -5,7 +5,6 @@ defmodule CrunchBerry.Components.Pagination do
   This component is designed to work with [Scrivener](https://github.com/drewolson/scrivener) result pages,
   using Tailwind classes.
   """
-  use Phoenix.HTML
   use Phoenix.LiveComponent
 
   @type classes :: %{
@@ -76,7 +75,7 @@ defmodule CrunchBerry.Components.Pagination do
           <li>
             <%= if page_num == "..." do %>
               <span class={@classes[:ellipsis]}>
-                <%= page_num %>
+                {page_num}
               </span>
             <% else %>
               <button
@@ -86,7 +85,7 @@ defmodule CrunchBerry.Components.Pagination do
                 phx-click={@page_event_name}
                 phx-value-page={page_num}
               >
-                <%= page_num %>
+                {page_num}
               </button>
             <% end %>
           </li>

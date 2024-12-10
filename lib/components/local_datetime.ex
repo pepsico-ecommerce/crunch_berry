@@ -34,7 +34,7 @@ defmodule CrunchBerry.Components.LocalDateTime do
 
   def local_datetime(assigns) do
     ~H"""
-    <span><%= format(assigns) %></span>
+    <span>{format(assigns)}</span>
     """
   end
 
@@ -54,7 +54,7 @@ defmodule CrunchBerry.Components.LocalDateTime do
     <span class="text-xs text-gray-cool-2 opacity-50 hover:opacity-100 transition-opacity cursor-default">
       timezone
       <code>
-        <%= timezone(assigns) %>
+        {timezone(assigns)}
       </code>
     </span>
     """

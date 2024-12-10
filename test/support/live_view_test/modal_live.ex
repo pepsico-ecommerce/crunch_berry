@@ -46,7 +46,7 @@ defmodule CrunchBerry.LiveViewTest.ModalLive do
         <% end %>
       <% end %>
       <%= if Map.has_key?(assigns, :message) do %>
-        <div data-test-id="message"><%= @message %></div>
+        <div data-test-id="message">{@message}</div>
       <% end %>
     </div>
     """

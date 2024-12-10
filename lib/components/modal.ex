@@ -2,7 +2,6 @@ defmodule CrunchBerry.Components.Modal do
   @moduledoc """
   Reusable modal component, for use with TailwindCSS
   """
-  use Phoenix.HTML
   use Phoenix.LiveComponent
 
   @classes_defaults %{
@@ -58,7 +57,7 @@ defmodule CrunchBerry.Components.Modal do
                 class={@classes[:cancel_icon]}
                 title="Close"
               >
-                <%= raw("&times;") %>
+                {Phoenix.HTML.raw("&times;")}
               </.link>
             <% else %>
               <button

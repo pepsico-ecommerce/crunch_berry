@@ -2,7 +2,6 @@ defmodule CrunchBerry.Components.TypeAhead do
   @moduledoc """
   Reusable modal component, for use with TailwindCSS
   """
-  use Phoenix.HTML
   use Phoenix.LiveComponent
 
   @impl Phoenix.LiveComponent
@@ -45,7 +44,9 @@ defmodule CrunchBerry.Components.TypeAhead do
     ~H"""
     <div class={class_or_default(assigns, :root)}>
       <div class={class_or_default(assigns, :container)}>
-        <%= label(assigns.form, assigns.label, class: class_or_default(assigns, :label)) %>
+        <label class={class_or_default(assigns, :label)} for={"type_ahead_search_#{@id}"}>
+          {assigns.label}
+        </label>
         <input
           class={class_or_default(assigns, :input)}
           type="text"
@@ -60,7 +61,7 @@ defmodule CrunchBerry.Components.TypeAhead do
         />
 
         <%= if show_results?(assigns) do %>
-          <%= do_render_drop_down(assigns) %>
+          {do_render_drop_down(assigns)}
         <% end %>
       </div>
     </div>
@@ -88,7 +89,7 @@ defmodule CrunchBerry.Components.TypeAhead do
             phx-value-type-ahead-id={assigns.id}
             {phx_target(assigns)}
           >
-            <%= raw(format_search_result(result, assigns.search_text)) %>
+            {Phoenix.HTML.raw(format_search_result(result, assigns.search_text))}
           </li>
         <% end %>
       </ul>

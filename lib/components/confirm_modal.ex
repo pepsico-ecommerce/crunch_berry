@@ -43,7 +43,6 @@ defmodule CrunchBerry.Components.ConfirmModal do
   end
   ```
   """
-  use Phoenix.HTML
   use Phoenix.LiveComponent
 
   @impl Phoenix.LiveComponent
@@ -89,13 +88,13 @@ defmodule CrunchBerry.Components.ConfirmModal do
           </div>
           <div class="w-full max-w-lg p-2">
             <h2 class="font-bold block w-full text-center text-grey-darkest mb-2 pt-4">
-              <%= @title %>
+              {@title}
             </h2>
             <div class="text-center">
-              <%= @message %>
+              {@message}
             </div>
             <div class="text-center">
-              <%= @call_to_action %>
+              {@call_to_action}
             </div>
             <div class="text-right p-2">
               <button

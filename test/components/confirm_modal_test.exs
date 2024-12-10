@@ -91,7 +91,7 @@ defmodule CrunchBerry.Components.ConfirmModalTest do
         message="This will clear the current session, and replace it with a new csv file."
       />
       <div>
-        click: <%= @message %>
+        click: {@message}
       </div>
       """
     end
